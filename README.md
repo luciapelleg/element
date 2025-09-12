@@ -1,5 +1,8 @@
 # @webreflection/element
 
+<sup>**Social Media Photo by [James Owen](https://unsplash.com/@jhjowen) on [Unsplash](https://unsplash.com/)**</sup>
+
+
 A minimalistic DOM element creation library.
 
 ## Usage and Description
@@ -47,9 +50,7 @@ Please read the [example](#example) to have more complete example of how all the
 
 - - -
 
-## Example
-
-**[Live Demo](https://webreflection.github.io/element/)**
+## Example - [Live Demo](https://webreflection.github.io/element/)
 
 ```js
 import element from 'https://esm.run/@webreflection/element';
