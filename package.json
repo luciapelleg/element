@@ -10,7 +10,6 @@
   },
   "exports": {
     ".": "./index.js",
-    "./min": "./index.min.js",
     "./package.json": "./package.json"
   },
   "scripts": {

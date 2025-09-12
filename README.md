@@ -53,6 +53,7 @@ Please read the [example](#example) to have more complete example of how all the
 ## Example - [Live Demo](https://webreflection.github.io/element/)
 
 ```js
+// https://cdn.jsdelivr.net/npm/@webreflection/element/index.min.js for best compression
 import element from 'https://esm.run/@webreflection/element';
 
 // element(document.body, ...) or use the selector switch:
