@@ -22,7 +22,7 @@ const { ownKeys } = Reflect;
  * @returns
  */
 export default (tag, options = {}) => {
-  let node;
+  let custom = false, node;
   // if `tag` is a string, create a new element, or ...
   if (typeof tag === 'string') {
     // if tag starts with `<`, use querySelector instead
@@ -41,7 +41,7 @@ export default (tag, options = {}) => {
           'http://www.w3.org/2000/svg',
           isSVG ? tag : tag.slice(4),
         ) :
-        (options.is ?
+        ((custom = !!options.is) ?
           document.createElement(tag, { is: options.is }) :
           document.createElement(tag))
       ;
@@ -52,6 +52,7 @@ export default (tag, options = {}) => {
 
   // loop through options keys and symbols
   for (let key of ownKeys(options)) {
+    if (custom && key === 'is') continue;
     let value = options[key];
     // if `key` is `children` or `childNodes`, append the values to the node
     if (key === 'children' || key === 'childNodes') {
