@@ -1,0 +1,20 @@
+{
+  "name": "@webreflection/element",
+  "version": "0.0.0",
+  "description": "A minimalistic DOM element creation library.",
+  "main": "index.js",
+  "module": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebReflection/element.git"
+  },
+  "files": ["index.js", "README.md", "LICENSE"],
+  "keywords": ["minimalistic", "dom", "element", "creation", "library"],
+  "author": "Andrea Giammarchi",
+  "license": "MIT",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/WebReflection/element/issues"
+  },
+  "homepage": "https://github.com/WebReflection/element#readme"
+}
