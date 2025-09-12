@@ -1,6 +1,6 @@
 {
   "name": "@webreflection/element",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "A minimalistic DOM element creation library.",
   "main": "index.js",
   "module": "index.js",
