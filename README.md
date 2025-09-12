@@ -11,11 +11,11 @@ The *default* export is a function that accepts a `tag` and an optional `options
 
 ### The `tag`
 
-  * if it's an *Element* aleady it uses options to enrich the element as described
+  * if it's an *Element* already it uses options to enrich the element as described
   * if it's a `string` and it does not start with `<`, it creates a new *Element* with such name
     * if it starts with `svg` or the `tag` value is `svg` itself, it creates an *SVGElement*
     * in every other case it creates an *HTMLElement* or, of course, a *CustomElement* with such name or, if `options.is` exists, a custom element builtin extend
-  * if it's a `string` and it starts with `<` it uses the element found after `document.querySelector`. If no element is found, it requrns `null` out of the box. 
+  * if it's a `string` and it starts with `<` it uses the element found after `document.querySelector`. If no element is found, it returns `null` out of the box. 
 
 ### The `options`
 
@@ -27,9 +27,9 @@ Each option `key` / `value` pair is handled to enrich the created or retrieved e
   * if the `key` is **childNodes** or **children** (as DX friendly alias), all values are just appended via `element.append(...value)`
   * if `key in element` is `false`:
     * **aria** and **data** are used to attach `aria-` prefixed attributes (with the `role` exception) or the element `dataset`
-    * **class**, **html** and **text** are transformed into `className`, `innerHTML` and `textContent` to direclty set these properties with less, yet semantic, typing
-    * **@type** is threated as *listener* intent. If its value is an *array*, it is possible to add the third parameter to `element.addEventListener(key.slice(1), ...value)`, otherwise the listener will be added without options
-    * **?name** is threaded as boolean attribute intent and, like it is for *@type*, the key will see the first char removed
+    * **class**, **html** and **text** are transformed into `className`, `innerHTML` and `textContent` to directly set these properties with less, yet semantic, typing
+    * **@type** is treated as *listener* intent. If its value is an *array*, it is possible to add the third parameter to `element.addEventListener(key.slice(1), ...value)`, otherwise the listener will be added without options
+    * **?name** is treated as boolean attribute intent and, like it is for *@type*, the key will see the first char removed
   * if `key in element` is `true`:
     * **classList** adds all classes via `element.classList.add(...value)`
     * **style** content is directly set via `element.style.cssText = value` or via `element.setAttribute('style', value)` in case of *SVG* element
@@ -40,7 +40,7 @@ Each option `key` / `value` pair is handled to enrich the created or retrieved e
 
 If `key in element` is `false`, the behavior is inferred by the value:
 
-  * a `boolean` value that is know known in the *element* will be handled via `element.toggleAttribute(key, value)`
+  * a `boolean` value that is not known in the *element* will be handled via `element.toggleAttribute(key, value)`
   * a `function` or an `object` with a `handleEvent` are handled via `element.addEventListener(key, value)`
   * an `object` without `handleEvent` will be serialized as *JSON* to safely land as `element.setAttribute(key, JSON.stringify(value))`
   * `null` and `undefined` are simply ignored
@@ -78,7 +78,7 @@ element('< body', {
   ],
   childNodes: [
     element('h1', {
-      // clallName
+      // className
       class: 'name',
       // textContent
       text: '@webreflection/element',
