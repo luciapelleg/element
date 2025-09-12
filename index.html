@@ -8,13 +8,18 @@
     import element from './index.js';
 
     element('< body', {
+      // override body.style.cssText = ...
       style: 'text-align: center',
+      // classList.add('some', 'container')
       classList: ['some', 'container'],
+      // a custom listener as object.handleEvent pattern
       ['custom:event']: {
-        handleEvent: ({ type, currentTarget }) => {
-          console.log(type, currentTarget);
+        count: 0,
+        handleEvent({ type, currentTarget }) {
+          console.log(++this.count, type, currentTarget);
         },
       },
+      // listener with an extra { once: true } option
       ['@click']: [
         ({ type, currentTarget }) => {
           console.log(type, currentTarget);
@@ -24,17 +29,23 @@
       ],
       childNodes: [
         element('h1', {
+          // clallName
           class: 'name',
+          // textContent
           text: '@webreflection/element',
           style: 'color: purple',
+          // role="heading" aria-level="1"
           aria: {
             role: 'heading',
             level: 1,
           },
+          // dataset.test = 'ok'
           data: {
             test: 'ok',
           },
+          // serialized as `json` attribute
           json: {a: 1, b: 2},
+          // direct listener
           onclick: ({ type, currentTarget }) => {
             console.log(type, currentTarget);
           },
@@ -42,7 +53,8 @@
         element('svg', {
           width: 100,
           height: 100,
-          childNodes: [
+          // alias for childNodes
+          children: [
             element('svg:circle', {
               cx: 50,
               cy: 50,
@@ -52,6 +64,7 @@
           ]
         }),
         element('p', {
+          // innerHTML
           html: 'made with ❤️ for the <strong>Web</strong>',
         })
       ]

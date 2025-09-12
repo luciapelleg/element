@@ -23,13 +23,17 @@ const { ownKeys } = Reflect;
  */
 export default (tag, options = {}) => {
   let node;
-  // if `tag` is a string, create a new element
+  // if `tag` is a string, create a new element, or ...
   if (typeof tag === 'string') {
+    // if tag starts with `<`, use querySelector instead
     if (tag.startsWith('<')) {
       node = document.querySelector(tag.slice(1));
+      // return null if no node is found
       if (!node) return null;
     }
     else {
+      // create either an SVG or HTML element
+      // for svg it's either `svg` itself or `svg:` followed by the tag name
       const isSVG = tag === 'svg';
       const isNS = isSVG || tag.startsWith('svg:');
       node = isNS ?
@@ -37,7 +41,9 @@ export default (tag, options = {}) => {
           'http://www.w3.org/2000/svg',
           isSVG ? tag : tag.slice(4),
         ) :
-        document.createElement(tag)
+        (options.is ?
+          document.createElement(tag, { is: options.is }) :
+          document.createElement(tag))
       ;
     }
   }
