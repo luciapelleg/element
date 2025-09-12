@@ -13,7 +13,7 @@ The *default* export is a function that accepts a `tag` and an optional `options
 
   * if it's an *Element* already it uses options to enrich the element as described
   * if it's a `string` and it does not start with `<`, it creates a new *Element* with such name
-    * if it starts with `svg` or the `tag` value is `svg` itself, it creates an *SVGElement*
+    * if it starts with `svg:` (followed by its name) or the `tag` value is `svg` itself, it creates an *SVGElement*
     * in every other case it creates an *HTMLElement* or, of course, a *CustomElement* with such name or, if `options.is` exists, a custom element builtin extend
   * if it's a `string` and it starts with `<` it uses the element found after `document.querySelector`. If no element is found, it returns `null` out of the box. 
 
