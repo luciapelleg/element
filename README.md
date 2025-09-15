@@ -7,7 +7,7 @@ A minimalistic DOM element creation library.
 
 ## Usage and Description
 
-The *default* export is a function that accepts a `tag` and an optional `options` or `setup` literal.
+The *default* export is a function that accepts a `tag` and an optional `options` or `setup` literal, plus zero, one or more *childNodes* to append: `(tag:string|Node, options:object?, ...(Node|string)[])`
 
 ### The `tag`
 
@@ -24,7 +24,6 @@ Each option `key` / `value` pair is handled to enrich the created or retrieved e
 
 #### The `key`
 
-  * if the `key` is **childNodes** or **children** (as DX friendly alias), all values are just appended via `element.append(...value)`
   * if `key in element` is `false`:
     * **aria** and **data** are used to attach `aria-` prefixed attributes (with the `role` exception) or the element `dataset`
     * **class**, **html** and **text** are transformed into `className`, `innerHTML` and `textContent` to directly set these properties with less, yet semantic, typing
@@ -56,67 +55,71 @@ Please read the [example](#example) to have more complete example of how all the
 // https://cdn.jsdelivr.net/npm/@webreflection/element/index.min.js for best compression
 import element from 'https://esm.run/@webreflection/element';
 
-// element(document.body, ...) or use the selector switch:
-element('< body', {
-  // override body.style.cssText = ...
-  style: 'text-align: center',
-  // classList.add('some', 'container')
-  classList: ['some', 'container'],
-  // a custom listener as object.handleEvent pattern
-  ['custom:event']: {
-    count: 0,
-    handleEvent({ type, currentTarget }) {
-      console.log(++this.count, type, currentTarget);
-    },
-  },
-  // listener with an extra { once: true } option
-  ['@click']: [
-    ({ type, currentTarget }) => {
-      console.log(type, currentTarget);
-      currentTarget.dispatchEvent(new Event('custom:event'))
-    },
-    { once: true },
-  ],
-  childNodes: [
-    element('h1', {
-      // className
-      class: 'name',
-      // textContent
-      text: '@webreflection/element',
-      style: 'color: purple',
-      // role="heading" aria-level="1"
-      aria: {
-        role: 'heading',
-        level: 1,
+// direct node reference or `< css-selector`  to enrich, ie:
+// element(document.body, ...) or ...
+element(
+  '< body',
+  {
+    // override body.style.cssText = ...
+    style: 'text-align: center',
+    // classList.add('some', 'container')
+    classList: ['some', 'container'],
+    // a custom listener as object.handleEvent pattern
+    ['custom:event']: {
+      count: 0,
+      handleEvent({ type, currentTarget }) {
+        console.log(++this.count, type, currentTarget);
       },
-      // dataset.test = 'ok'
-      data: {
-        test: 'ok',
-      },
-      // serialized as `json` attribute
-      json: {a: 1, b: 2},
-      // direct listener
-      onclick: ({ type, currentTarget }) => {
+    },
+    // listener with an extra { once: true } option
+    ['@click']: [
+      ({ type, currentTarget }) => {
         console.log(type, currentTarget);
+        currentTarget.dispatchEvent(new Event('custom:event'))
       },
-    }),
-    element('svg', {
+      { once: true },
+    ],
+  },
+  // body children / childNodes
+  element('h1', {
+    // clallName
+    class: 'name',
+    // textContent
+    text: '@webreflection/element',
+    style: 'color: purple',
+    // role="heading" aria-level="1"
+    aria: {
+      role: 'heading',
+      level: 1,
+    },
+    // dataset.test = 'ok'
+    data: {
+      test: 'ok',
+    },
+    // serialized as `json` attribute
+    json: {a: 1, b: 2},
+    // direct listener
+    onclick: ({ type, currentTarget }) => {
+      console.log(type, currentTarget);
+    },
+  }),
+  element(
+    'svg',
+    {
       width: 100,
       height: 100,
-      // alias for childNodes
-      children: [
-        element('svg:circle', {
-          cx: 50,
-          cy: 50,
-          r: 50,
-          fill: 'violet',
-        }),
-      ]
-    }),
-    element('p', {
-      // innerHTML
-      html: 'made with ❤️ for the <strong>Web</strong>',
+    },
+    // svg children / childNodes
+    element('svg:circle', {
+      cx: 50,
+      cy: 50,
+      r: 50,
+      fill: 'violet',
     })
-  ]
-});
+  ),
+  element('p', {
+    // innerHTML
+    html: 'made with ❤️ for the <strong>Web</strong>',
+  })
+);
 ```

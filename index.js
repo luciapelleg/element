@@ -4,16 +4,15 @@ const { assign } = Object;
 const { ownKeys } = Reflect;
 
 /**
- * @typedef {Object} Options
- * @property {Object} [aria] - An optional literal describing `aria` attributes such as `role` or `level` or `labelledby`.
+ * @typedef {Record<string|symbol, any>} Options
+ * @property {Record<string, string|number>} [aria] - An optional literal describing `aria` attributes such as `role` or `level` or `labelledby`.
  * @property {string} [class] - The optional class to set to the element. as `className`.
  * @property {string[]} [classList] - The optional class list to add to the element.
- * @property {Object} [data] - An optional literal describing `dataset` properties.
+ * @property {Record<string, any>} [data] - An optional literal describing `dataset` properties.
  * @property {string} [html] - The optional html to set to the element. as `innerHTML`.
  * @property {string} [text] - The optional text to set to the element. as `textContent`.
  * @property {string} [style] - The optional style to apply to the element.
- * @property {(string | Element | SVGElement)[]} [childNodes] - An optional list of child nodes to append to the element.
- * @property {(string | Element | SVGElement)[]} [children] - An optional list of child nodes to append to the element.
+ * @property {Document} [document] - The optional document to use, defaults to `document`.
  */
 
 /**
@@ -21,13 +20,13 @@ const { ownKeys } = Reflect;
  * @param {Options} options - The options object.
  * @returns
  */
-export default (tag, options = {}) => {
-  let custom = false, node;
+export default (tag, options = {}, ...childNodes) => {
+  let doc = options.document ?? document, custom = false, node;
   // if `tag` is a string, create a new element, or ...
   if (typeof tag === 'string') {
     // if tag starts with `<`, use querySelector instead
     if (tag.startsWith('<')) {
-      node = document.querySelector(tag.slice(1));
+      node = doc.querySelector(tag.slice(1));
       // return null if no node is found
       if (!node) return null;
     }
@@ -37,13 +36,13 @@ export default (tag, options = {}) => {
       const isSVG = tag === 'svg';
       const isNS = isSVG || tag.startsWith('svg:');
       node = isNS ?
-        document.createElementNS(
+        doc.createElementNS(
           'http://www.w3.org/2000/svg',
           isSVG ? tag : tag.slice(4),
         ) :
         ((custom = !!options.is) ?
-          document.createElement(tag, { is: options.is }) :
-          document.createElement(tag))
+          doc.createElement(tag, { is: options.is }) :
+          doc.createElement(tag))
       ;
     }
   }
@@ -54,11 +53,6 @@ export default (tag, options = {}) => {
   for (let key of ownKeys(options)) {
     if (custom && key === 'is') continue;
     let value = options[key];
-    // if `key` is `children` or `childNodes`, append the values to the node
-    if (key === 'children' || key === 'childNodes') {
-      node.append(...value);
-      continue;
-    }
     // if `key` is not a node known property ...
     if (!(key in node)) {
       // handle with ease intents: `aria`, `data`, `style`, `html`, `text`
@@ -158,6 +152,8 @@ export default (tag, options = {}) => {
     // last resort: set the value as attribute
     node.setAttribute(key, value);
   }
+
+  if (childNodes.length) node.append(...childNodes);
 
   return node;
 };
