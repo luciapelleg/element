@@ -1,18 +1,21 @@
 /** @import { ChildNodes, Options, Output, Tag } from "./types.ts"; */
+
 const { isArray } = Array;
 const { stringify } = JSON;
 const { assign } = Object;
 const { ownKeys } = Reflect;
+const empty = {};
 
 /**
  * @template {Tag} PassedTag
  * @param {PassedTag} tag - The tag name of the element to create or the element to use. If the name starts with `<`, it will be treated as a query selector and the first matching element will be used, if any.
- * @param {Options} options - The options object.
+ * @param {Options?} [options] - The options object.
  * @param {ChildNodes} childNodes - The optional child nodes to append to the element.
  * @returns {Output<PassedTag>}
  */
-export default (tag, options = {}, ...childNodes) => {
-  let doc = options.document ?? document, custom = false, node;
+export default (tag, options = empty, ...childNodes) => {
+  if (!options) options = empty;
+  let doc = options.document || document, custom = false, node;
   // if `tag` is a string, create a new element, or ...
   if (typeof tag === 'string') {
     // if tag starts with `<`, use querySelector instead
