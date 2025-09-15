@@ -44,7 +44,7 @@ const { ownKeys } = Reflect;
 /**
  * @param {Tag} tag - The tag name of the element to create or the element to use. If the name starts with `<`, it will be treated as a query selector and the first matching element will be used, if any.
  * @param {Options} options - The options object.
- * @param {(Node | DocumentFragment | SVGElement | Element | string)[]} [childNodes] - The optional child nodes to append to the element.
+ * @param {readonly (Node | DocumentFragment | SVGElement | Element | string)[]} childNodes - The optional child nodes to append to the element.
  * @returns {SVGElement | Element | null}
  */
 export default (tag, options = {}, ...childNodes) => {
