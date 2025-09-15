@@ -1,51 +1,15 @@
+/** @import { ChildNodes, Options, Output, Tag } from "./types.ts"; */
 const { isArray } = Array;
 const { stringify } = JSON;
 const { assign } = Object;
 const { ownKeys } = Reflect;
 
 /**
- * @template {string} CamelCase
- * @typedef {CamelCase extends `${infer Head}${infer Tail}`
- *   ? Tail extends Uncapitalize<Tail>
- *     ? `${Lowercase<Head>}${KebabCase<Tail>}`
- *     : `${Lowercase<Head>}-${KebabCase<Tail>}`
- *   : CamelCase} KebabCase Turns camelCase into kebab-case
- */
-
-/**
- * @typedef {{
- *   [Key in keyof ARIAMixin as Key extends `aria${infer Rest}`
- *     ? KebabCase<Uncapitalize<Rest>>
- *     : Key]?: string;
- * }} AriaAttributes Turns AriaMixin global properties into their attribute counterparts.
- */
-
-/**
- * @typedef {keyof (SVGElementTagNameMap & HTMLElementTagNameMap) | `${string}-${string}`} TagName List of possible tag names
- */
-
-/**
- * @typedef {TagName | `<${string}` | Element | SVGElement} Tag
- */
-
-/**
- * @typedef Options
- * @property {AriaAttributes} [aria] - An optional literal describing `aria` attributes such as `role` or `level` or `labelledby`.
- * @property {string} [class] - The optional class to set to the element. as `className`.
- * @property {string[]} [classList] - The optional class list to add to the element.
- * @property {DOMStringMap} [data] - An optional literal describing `dataset` properties.
- * @property {Document} [document] - An optional document to use, defaults to the global `document`.
- * @property {`${string}-${string}`} [is] - An optional builtin extend custom element name.
- * @property {string} [html] - The optional html to set to the element. as `innerHTML`.
- * @property {string} [text] - The optional text to set to the element. as `textContent`.
- * @property {string} [style] - The optional style to apply to the element.
- */
-
-/**
- * @param {Tag} tag - The tag name of the element to create or the element to use. If the name starts with `<`, it will be treated as a query selector and the first matching element will be used, if any.
- * @param {Record<string | symbol, unknown> & Options} options - The options object.
- * @param {readonly (Node | DocumentFragment | SVGElement | Element | string)[]} childNodes - The optional child nodes to append to the element.
- * @returns {SVGElement | Element | null}
+ * @template {Tag} PassedTag
+ * @param {PassedTag} tag - The tag name of the element to create or the element to use. If the name starts with `<`, it will be treated as a query selector and the first matching element will be used, if any.
+ * @param {Options} options - The options object.
+ * @param {ChildNodes} childNodes - The optional child nodes to append to the element.
+ * @returns {Output<PassedTag>}
  */
 export default (tag, options = {}, ...childNodes) => {
   let doc = options.document ?? document, custom = false, node;
