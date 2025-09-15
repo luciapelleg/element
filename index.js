@@ -13,8 +13,8 @@ const empty = {};
  * @param {ChildNodes} childNodes - The optional child nodes to append to the element.
  * @returns {Output<PassedTag>}
  */
-export default (tag, options = empty, ...childNodes) => {
-  if (!options) options = empty;
+export default (tag, options, ...childNodes) => {
+  options ??= empty;
   let doc = options.document || document, custom = false, node;
   // if `tag` is a string, create a new element, or ...
   if (typeof tag === 'string') {
