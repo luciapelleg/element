@@ -9,7 +9,7 @@ const { ownKeys } = Reflect;
  *   ? Tail extends Uncapitalize<Tail>
  *     ? `${Lowercase<Head>}${KebabCase<Tail>}`
  *     : `${Lowercase<Head>}-${KebabCase<Tail>}`
- *   : CamelCase} KebabCase Turns camelCase into kebab-case
+ *   : CamelCase} KebabCase Turns camelCase into kebab-case.
  */
 
 /**
@@ -21,7 +21,7 @@ const { ownKeys } = Reflect;
  */
 
 /**
- * @typedef {keyof (SVGElementTagNameMap & HTMLElementTagNameMap) | `${string}-${string}`} TagName List of possible tag names
+ * @typedef {keyof (SVGElementTagNameMap & HTMLElementTagNameMap) | `${string}-${string}`} TagName List of possible tag names.
  */
 
 /**
@@ -31,13 +31,13 @@ const { ownKeys } = Reflect;
 /**
  * @typedef {Record<string|symbol, unknown>} Options
  * @property {AriaAttributes} [aria] - An optional literal describing `aria` attributes such as `role` or `level` or `labelledby`.
- * @property {string} [class] - The optional class to set to the element. as `className`.
+ * @property {string} [class] - The optional class to set to the element via `className`.
  * @property {string[]} [classList] - The optional class list to add to the element.
  * @property {DOMStringMap} [data] - An optional literal describing `dataset` properties.
  * @property {Document} [document] - An optional document to use, defaults to the global `document`.
  * @property {`${string}-${string}`} [is] - An optional builtin extend custom element name.
- * @property {string} [html] - The optional html to set to the element. as `innerHTML`.
- * @property {string} [text] - The optional text to set to the element. as `textContent`.
+ * @property {string} [html] - The optional html to set to the element via `innerHTML`.
+ * @property {string} [text] - The optional text to set to the element via `textContent`.
  * @property {string} [style] - The optional style to apply to the element.
  */
 
