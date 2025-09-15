@@ -29,7 +29,7 @@ const { ownKeys } = Reflect;
  */
 
 /**
- * @typedef {Record<string|symbol, unknown>} Options
+ * @typedef Options
  * @property {AriaAttributes} [aria] - An optional literal describing `aria` attributes such as `role` or `level` or `labelledby`.
  * @property {string} [class] - The optional class to set to the element. as `className`.
  * @property {string[]} [classList] - The optional class list to add to the element.
@@ -43,7 +43,7 @@ const { ownKeys } = Reflect;
 
 /**
  * @param {Tag} tag - The tag name of the element to create or the element to use. If the name starts with `<`, it will be treated as a query selector and the first matching element will be used, if any.
- * @param {Options} options - The options object.
+ * @param {Record<string | symbol, unknown> & Options} options - The options object.
  * @param {readonly (Node | DocumentFragment | SVGElement | Element | string)[]} childNodes - The optional child nodes to append to the element.
  * @returns {SVGElement | Element | null}
  */
